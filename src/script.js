@@ -5,6 +5,15 @@ import vShader from './shaders/water/vertex.glsl';
 import fShader from './shaders/water/fragment.glsl';
 
 /**
+ * Open Graph
+ */
+const openGraphImage = document.querySelector("[data-og-images]");
+
+const ogImage = new Image(1200, 630);
+ogImage.src = './images/raging-sea.jpg';
+openGraphImage.setAttribute('content', ogImage.src);
+
+/**
  * Base
  */
 // Debug
@@ -36,7 +45,7 @@ scene.add(camera);
  * Water
  */
 // Geometry
-const waterGeometry = new THREE.PlaneGeometry(12, 12, 512, 512);
+const waterGeometry = new THREE.PlaneGeometry(6, 6, 512, 512);
 
 // Material
 const debugObject = {
@@ -67,27 +76,27 @@ const waterMaterial = new THREE.ShaderMaterial({
     }
 });
 
-gui.add(waterMaterial.uniforms.uAmplitude, 'value').min(0).max(1).step(0.001).name("Waves Amplitude");
-gui.add(waterMaterial.uniforms.uFrequency.value, 'x').min(0).max(10).step(0.001).name("Waves Frequency X");
-gui.add(waterMaterial.uniforms.uFrequency.value, 'y').min(0).max(10).step(0.001).name("Waves Frequency Y");
-gui.add(waterMaterial.uniforms.uSpeed, 'value').min(0).max(5).step(0.001).name("Waves Speed");
-gui.addColor(debugObject, 'depthColor').name("Wave Depth Color")
+gui.add(waterMaterial.uniforms.uAmplitude, 'value').min(0).max(1).step(0.001).name("Amplitude Vagues");
+gui.add(waterMaterial.uniforms.uFrequency.value, 'x').min(0).max(10).step(0.001).name("Fréquences Vagues X");
+gui.add(waterMaterial.uniforms.uFrequency.value, 'y').min(0).max(10).step(0.001).name("Fréquences Vagues Y");
+gui.add(waterMaterial.uniforms.uSpeed, 'value').min(0).max(5).step(0.001).name("Vitesse Vagues");
+gui.addColor(debugObject, 'depthColor').name("Couleur Vagues Profondes")
     .onChange(() => {
         water.material.uniforms.uDepthColor.value.set(debugObject.depthColor);
     })
 ;
-gui.addColor(debugObject, 'surfaceColor').name("Wave Surface Color")
+gui.addColor(debugObject, 'surfaceColor').name("Couleur Vagues Surface")
     .onChange(() => {
         water.material.uniforms.uSurfaceColor.value.set(debugObject.surfaceColor);
     })
 ;
-gui.add(waterMaterial.uniforms.uColorOffset, 'value').min(0).max(1).step(0.001).name("Waves Color Offset");
-gui.add(waterMaterial.uniforms.uColorMultiplier, 'value').min(0).max(10).step(0.001).name("Waves Color Multiplier");
+gui.add(waterMaterial.uniforms.uColorOffset, 'value').min(0).max(1).step(0.001).name("Décalage Couleur Vagues");
+gui.add(waterMaterial.uniforms.uColorMultiplier, 'value').min(0).max(10).step(0.001).name("Multiplication Couleur Vagues");
 
-gui.add(waterMaterial.uniforms.uSmallAmplitude, 'value').min(0).max(1).step(0.001).name("Small Waves Amplitude");
-gui.add(waterMaterial.uniforms.uSmallFrequency, 'value').min(0).max(30).step(0.001).name("Small Waves Frequency");
-gui.add(waterMaterial.uniforms.uSmallSpeed, 'value').min(0).max(1).step(0.001).name("Small Waves Speed");
-gui.add(waterMaterial.uniforms.uSmallIteration, 'value').min(0).max(5).step(1).name("Small Waves Iteration");
+gui.add(waterMaterial.uniforms.uSmallAmplitude, 'value').min(0).max(1).step(0.001).name("Amplitude Petites Vagues");
+gui.add(waterMaterial.uniforms.uSmallFrequency, 'value').min(0).max(30).step(0.001).name("Fréquence Petites Vagues");
+gui.add(waterMaterial.uniforms.uSmallSpeed, 'value').min(0).max(1).step(0.001).name("Vitesse Petites Vagues");
+gui.add(waterMaterial.uniforms.uSmallIteration, 'value').min(0).max(5).step(1).name("Itération Petites Vagues");
 
 // Mesh
 const water = new THREE.Mesh(waterGeometry, waterMaterial);
